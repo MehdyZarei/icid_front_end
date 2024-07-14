@@ -7,6 +7,7 @@ document.getElementById('dropdownButton').addEventListener('click', function ()
     const params = {'agency': 'DDC', 'version': '01'};
         
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
+    console.log(url);
 
     fetch(url)
     .then(response => response.json())
