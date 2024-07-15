@@ -13,7 +13,6 @@ document.getElementById('dropdownButton').addEventListener('click', function ()
     .then(response => response.json())
     .then(data => {
         console.log(data);
-        console.log(data.body.projects);
         console.log('test');
     }).catch(error => {
         console.error('Error Fetching data:', error);
