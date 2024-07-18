@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 'Content-Type': 'application/json'
             },
             mode: 'no-cors',
-            body: data;
+            body: data
             // body: JSON.stringify({'event': data});
         })
         .then(response => response.json())
