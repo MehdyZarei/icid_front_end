@@ -55,20 +55,20 @@ document.addEventListener("DOMContentLoaded", () => {
         event.preventDefault();
 
         const formData = new FormData(form);
-        const data = {"agency": "DDC", "version": "01"};
+        const args = {"agency": "DDC", "version": "01"};
 
         formData.forEach((value, key) => {
-            data[key] = value;
+            args[key] = value;
         });
-        console.log(data); 
-        console.log(JSON.stringify(data));       
+        console.log(args); 
+        console.log(JSON.stringify(args));       
         fetch('https://jo0j7u627k.execute-api.us-east-2.amazonaws.com/dev/POST', { // Replace with your API endpoint
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             mode: 'no-cors',
-            body: data
+            body: args
             // body: JSON.stringify({'event': data});
         })
         .then(response => response.json())
