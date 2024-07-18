@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         formData.forEach((value, key) => {
             data[key] = value;
         });
-        console.log(date); 
+        console.log(data); 
         console.log(JSON.stringify(data));       
         fetch('https://jo0j7u627k.execute-api.us-east-2.amazonaws.com/dev/POST', { // Replace with your API endpoint
             method: 'POST',
