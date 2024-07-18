@@ -69,7 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify(args)
             }
         ).then(
-            response => response.json()
+            response => {
+                response.json();
+                console.log(response);
+            }
         ).then(
             data => {
                 console.log('Success:', data);
