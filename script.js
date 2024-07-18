@@ -7,7 +7,7 @@ document.getElementById('dropdownButton').addEventListener('click', function ()
     const params = {'agency': 'DDC', 'version': '01'};
         
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-    console.log(url);
+    // console.log(url);
 
     fetch(url)
     .then(response => response.json())
@@ -67,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
             headers: {
                 'Content-Type': 'application/json'
             },
+            mode: 'no-cors',
             body: JSON.stringify(data)
         })
         .then(response => response.json())
