@@ -57,26 +57,26 @@ document.addEventListener("DOMContentLoaded", () => {
         const formData = new FormData(form);
         const args = {"agency": "DDC", "version": "01"};
 
-        formData.forEach((value, key) => {
-            args[key] = value;
-        });
-        console.log(args); 
-        console.log(JSON.stringify(args));       
-        fetch('https://jo0j7u627k.execute-api.us-east-2.amazonaws.com/dev/POST', { // Replace with your API endpoint
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            mode: 'no-cors',
-            body: JSON.stringify(args)
-            // body: JSON.stringify({'event': data});
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            modal.style.display = 'none';
-            form.reset();
-        })
+        formData.forEach((value, key) => {args[key] = value;});
+
+        const url_post = new URL('https://y7hqsirgg2.execute-api.us-east-2.amazonaws.com/dev/');
+
+        fetch(url_post,
+            {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                // mode: 'no-cors',
+                body: JSON.stringify(args)
+            }
+        ).then(
+            response => response.json()
+        ).then(
+            data => {
+                console.log('Success:', data);
+                modal.style.display = 'none';
+                form.reset();
+            }
+        )
         .catch(error => {
             console.error('Error:', error);
         });
