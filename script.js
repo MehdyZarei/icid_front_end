@@ -68,12 +68,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 'Content-Type': 'application/json'
             },
             mode: 'no-cors',
-            body: args
+            body: JSON.stringify(args)
             // body: JSON.stringify({'event': data});
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Success:', datay);
+            console.log('Success:', data);
             modal.style.display = 'none';
             form.reset();
         })
