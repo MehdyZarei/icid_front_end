@@ -72,8 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
             // body: JSON.stringify({'event': data});
         })
         .then(response => response.json())
-        .then(body => {
-            console.log('Success:', body);
+        .then(data => {
+            console.log('Success:', data.body);
             modal.style.display = 'none';
             form.reset();
         })
