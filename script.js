@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         formData.forEach((value, key) => {args[key] = value;});
 
-        const url_post = new URL('https://y7hqsirgg2.execute-api.us-east-2.amazonaws.com/dev/');
+        const url_post = new URL('https://jo0j7u627k.execute-api.us-east-2.amazonaws.com/dev/POST');
 
         fetch(url_post,
             {
