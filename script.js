@@ -72,11 +72,11 @@ document.addEventListener("DOMContentLoaded", () => {
             // body: JSON.stringify({'event': data});
         })
         .then(response => response.json())
-        // .then(data => {
-        //     console.log('Success:', data.body);
-        //     modal.style.display = 'none';
-        //     form.reset();
-        // })
+        .then(data => {
+            console.log('Success:', datay);
+            modal.style.display = 'none';
+            form.reset();
+        })
         .catch(error => {
             console.error('Error:', error);
         });
