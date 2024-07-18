@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         ).then(
             response => {
-                response.json();
+                // response.json();
                 console.log(response);
             }
         ).then(
