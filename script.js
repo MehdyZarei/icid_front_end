@@ -12,11 +12,70 @@ document.getElementById('dropdownButton').addEventListener('click', function ()
     fetch(url)
     .then(response => response.json())
     .then(data => {
-        console.log(data);
-        console.log('test');
-    }).catch(error => {
+            data.projects.forEach(item => {
+                console.log(item);
+                var a = document.createElement('a');
+                a.textContent = item;
+                dropdownContent.appendChild(a);
+            });
+            // console.log(data.projects);
+        })
+    .catch(error => {
         console.error('Error Fetching data:', error);
+    });   
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById('myModal');
+    const openModalButton = document.getElementById('openModalButton');
+    const closeButton = document.querySelector('.close');
+    const cancelButton = document.getElementById('cancelButton');
+    const form = document.getElementById('form');
+
+    openModalButton.addEventListener('click', () => {
+        modal.style.display = 'block';
     });
-    
-}
-);
+
+    closeButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    cancelButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const data = {};
+
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        fetch('https://jo0j7u627k.execute-api.us-east-2.amazonaws.com/dev/POST/', { // Replace with your API endpoint
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log('Success:', result);
+            modal.style.display = 'none';
+            form.reset();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+});

@@ -4,20 +4,51 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Projects - DDC</title>
-    <link rel="stylesheet" href="styles.css" />
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
   </head>
   <body>
     <header>
-      <h1>Dropdown Menu with API Fetch</h1>
+      <h4>Dropdown Menu with API Fetch</h4>
     </header>
     <main>
       <div class="dropdown">
-        <button class="dropbtn" id="dropdownButton">Dropdown</button>
+        <button class="dropbtn" id="dropdownButton">Projects</button>
         <div class="dropdown-content" id="dropdownContent">
           <!-- Items will be appended here by javascript -->
         </div>
       </div>
     </main>
+    <button id="openModalButton">Open Form</button>
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Fill Out the Form</h2>
+        <form id="form">
+          <label for="ID">ID:</label>
+          <input type="text" id="ID" name="ID" required /><br /><br />
+          <label for="project_number">Project number:</label>
+          <input
+            type="text"
+            id="project_number"
+            name="project_number"
+            required
+          /><br /><br />
+          <label for="project_title">Project title:</label>
+          <input
+            type="text"
+            id="project_title"
+            name="project_title"
+            required
+          /><br /><br />
+          <label for="type">Type:</label>
+          <input type="text" id="type" name="type" required /><br /><br />
+          <label for="borough">Borough:</label>
+          <input type="text" id="borough" name="borough" required /><br /><br />
+          <button type="submit">Submit</button>
+          <button type="button" id="cancelButton">Cancel</button>
+        </form>
+      </div>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>
