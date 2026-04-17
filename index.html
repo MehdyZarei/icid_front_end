@@ -1,18 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projects - DDC</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <h3>Welcome to icid</h3>
-    <p>
-      <a
-        href="https://icid-test.auth.us-east-2.amazoncognito.com/login?client_id=1riqtlavhbkdnlplpidb052ppi&response_type=code&scope=openid&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Ficid_front_end%2Flogged_in.html"
-        >(Request or) Login</a
-      >
-    </p>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ICID — Sign In</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-logo">ICID</div>
+    <p class="login-tagline">Infrastructure Capital Infrastructure Division<br>Reporting Platform</p>
+
+    <button class="btn btn-primary" style="width:100%; justify-content:center; padding:12px;" onclick="signIn()">
+      Sign In
+    </button>
+
+    <div class="login-divider"></div>
+
+    <p class="login-dev-note">Development mode — signing in as dev user</p>
+    <button class="btn btn-ghost" style="width:100%; justify-content:center;" onclick="devSignIn()">
+      Continue as Dev User (Genghis Khan)
+    </button>
+  </div>
+</div>
+
+<script>
+  const API = 'https://icid-backend.vercel.app';
+
+  // If already signed in, skip login
+  if (localStorage.getItem('icid_user')) {
+    window.location.href = 'projects.html';
+  }
+
+  async function signIn() {
+    // Placeholder — will wire to real auth later
+    alert('Real auth coming soon. Use Dev User for now.');
+  }
+
+  async function devSignIn() {
+    // Fetch the dev user's info from the API
+    try {
+      const res = await fetch(`${API}/v1/users/`);
+      const json = await res.json();
+      const user = json.data.find(u => u.user_id === '28');
+
+      if (!user) throw new Error('Dev user not found');
+
+      localStorage.setItem('icid_user', JSON.stringify({
+        user_id: 28,
+        name: `${user.first_name} ${user.last_name}`,
+        email: user.email,
+        employer: user.employer,
+        initials: `${user.first_name[0]}${user.last_name[0]}`,
+      }));
+
+      window.location.href = 'projects.html';
+    } catch (err) {
+      console.error(err);
+      alert('Could not sign in. Check console for details.');
+    }
+  }
+</script>
+
+</body>
 </html>

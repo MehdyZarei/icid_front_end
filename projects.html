@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ICID — My Projects</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="navbar-brand">ICID</div>
+  <div class="navbar-right">
+    <span class="nav-user-name" id="nav-user-name"></span>
+    <div class="nav-avatar" id="nav-avatar"></div>
+  </div>
+</nav>
+
+<div class="app-shell">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-profile">
+      <div class="sidebar-avatar" id="sidebar-avatar"></div>
+      <div class="sidebar-profile-info">
+        <div class="sidebar-profile-name" id="sidebar-name"></div>
+        <div class="sidebar-profile-company" id="sidebar-company"></div>
+      </div>
+    </div>
+
+    <span class="sidebar-section-label">Menu</span>
+
+    <a href="projects.html" class="sidebar-item active">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      My Projects
+    </a>
+
+    <a href="#" class="sidebar-item" onclick="soon(event)">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Reports
+    </a>
+
+    <a href="#" class="sidebar-item" onclick="soon(event)">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Team
+    </a>
+
+    <span class="sidebar-section-label">Account</span>
+
+    <a href="#" class="sidebar-item" onclick="soon(event)">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Profile
+    </a>
+
+    <a href="#" class="sidebar-item" onclick="soon(event)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Settings
+    </a>
+
+    <div style="flex:1"></div>
+
+    <a href="index.html" class="sidebar-item" onclick="signOut(event)" style="margin-top:8px; color: var(--gray-500);">
+      <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sign Out
+    </a>
+  </aside>
+
+  <!-- Main -->
+  <main class="main-content">
+    <div class="page-header">
+      <div class="page-title">My Projects</div>
+      <div class="page-subtitle" id="project-count"></div>
+    </div>
+
+    <div id="projects-list">
+      <div class="loading">Loading projects…</div>
+    </div>
+  </main>
+
+</div>
+
+<script>
+  const API = 'https://icid-backend.vercel.app';
+
+  // ── Auth guard ──────────────────────────────────────────────
+  const raw = localStorage.getItem('icid_user');
+  if (!raw) { window.location.href = 'index.html'; }
+  const user = JSON.parse(raw);
+
+  // ── Populate user info ──────────────────────────────────────
+  document.getElementById('nav-user-name').textContent = user.name;
+  document.getElementById('nav-avatar').textContent = user.initials;
+  document.getElementById('sidebar-avatar').textContent = user.initials;
+  document.getElementById('sidebar-name').textContent = user.name;
+  document.getElementById('sidebar-company').textContent = user.employer || '';
+
+  // ── Status badge ────────────────────────────────────────────
+  function statusBadge(status) {
+    if (!status) return '';
+    const s = status.toLowerCase();
+    let cls = 'badge-gray';
+    if (s.includes('active'))      cls = 'badge-green';
+    else if (s.includes('pending') || s.includes('design')) cls = 'badge-amber';
+    else if (s.includes('closed') || s.includes('complete')) cls = 'badge-blue';
+    return `<span class="badge ${cls}">${status}</span>`;
+  }
+
+  // ── Render projects ─────────────────────────────────────────
+  function renderProjects(projects) {
+    const list = document.getElementById('projects-list');
+    const count = document.getElementById('project-count');
+
+    if (projects.length === 0) {
+      count.textContent = '';
+      list.innerHTML = `
+        <div class="empty-state">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#cdd1d8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+          </svg>
+          <p>No projects assigned yet.</p>
+        </div>`;
+      return;
+    }
+
+    count.textContent = `${projects.length} project${projects.length !== 1 ? 's' : ''}`;
+    list.innerHTML = projects.map(p => `
+      <div class="project-card" onclick="openProject('${p.project_id}')">
+        <div class="project-card-left">
+          <div class="project-name">${p.project_name}</div>
+          <div class="project-meta">
+            ${p.borough ? `
+            <span class="project-meta-item">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              ${p.borough}
+            </span>` : ''}
+            ${p.user_role ? `
+            <span class="project-meta-item">
+              <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              ${p.user_role}
+            </span>` : ''}
+          </div>
+        </div>
+        <div class="project-card-right">
+          ${statusBadge(p.status)}
+          <svg class="chevron-right" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ── Load projects ───────────────────────────────────────────
+  async function loadProjects() {
+    try {
+      const res = await fetch(`${API}/v1/projects/?user_id=${user.user_id}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      renderProjects(json.data);
+    } catch (err) {
+      console.error(err);
+      document.getElementById('projects-list').innerHTML =
+        `<div class="empty-state"><p>Could not load projects. Please try again.</p></div>`;
+    }
+  }
+
+  function openProject(projectId) {
+    window.location.href = `project_detail.html?id=${projectId}`;
+  }
+
+  function signOut(e) {
+    e.preventDefault();
+    localStorage.removeItem('icid_user');
+    window.location.href = 'index.html';
+  }
+
+  function soon(e) {
+    e.preventDefault();
+    alert('Coming soon.');
+  }
+
+  loadProjects();
+</script>
+
+</body>
+</html>
